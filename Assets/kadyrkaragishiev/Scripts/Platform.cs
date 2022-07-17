@@ -12,6 +12,8 @@ namespace kadyrkaragishiev.Scripts
         [SerializeField]
         private List<Rigidbody> tileRigidbody = new List<Rigidbody>();
 
+        private readonly Dictionary<GameObject, bool> _tileDictionary = new Dictionary<GameObject, bool>();
+
         public delegate void OnDisableCallback(Platform platform);
 
         public OnDisableCallback OnDisableEvent;
@@ -20,10 +22,22 @@ namespace kadyrkaragishiev.Scripts
         {
             for (var i = 0; i < tileMeshRenderer.Count; i++)
             {
-                tileMeshRenderer[i].material = damageTileIndecies.Contains(i) ? damageMat : normalMat;
-                tileMeshRenderer[i].tag = damageTileIndecies.Contains(i) ? "Damage Tile" : "Normal Tile";
+                if (damageTileIndecies.Contains(i))
+                {
+                    tileMeshRenderer[i].material = damageMat;
+                    tileMeshRenderer[i].tag = "Damage Tile";
+                    _tileDictionary.Add(tileMeshRenderer[i].gameObject, true);
+                }
+                else
+                {
+                    tileMeshRenderer[i].material = normalMat;
+                    tileMeshRenderer[i].tag = "Normal Tile";
+                    _tileDictionary.Add(tileMeshRenderer[i].gameObject, false);
+                }
             }
         }
+
+        public bool IsDamageTile(GameObject tile) => _tileDictionary[tile];
 
         public void DestroyPlatform()
         {

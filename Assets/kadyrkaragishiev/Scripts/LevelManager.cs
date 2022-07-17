@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using kadyrkaragishiev.LevelingSystem;
 using UnityEngine;
 using UnityEngine.Pool;
 using Random = UnityEngine.Random;
@@ -21,10 +22,7 @@ namespace kadyrkaragishiev.Scripts
         private Transform finishLine;
 
         [SerializeField]
-        private float levelMinLenght = 10f;
-
-        [SerializeField]
-        private float levelMaxLenght = 20f;
+        private int LevelLength = 10;
 
         [SerializeField]
         private Material normalMaterial;
@@ -39,11 +37,18 @@ namespace kadyrkaragishiev.Scripts
         private Ball _ball;
 
         private ObjectPool<Platform> PlatformPool;
+        
+        
 
         private void Awake()
         {
             PlatformPool = new ObjectPool<Platform>(CreatePooledObject, OnTakeFromPool, OnReturnToPool, OnDestroyObject,
                 false, 200, 100_000);
+        }
+
+        public void InitLevel(LevelSettings settings)
+        {
+            
         }
         private void Start() => Initialize();
         private Platform CreatePooledObject()
@@ -72,12 +77,11 @@ namespace kadyrkaragishiev.Scripts
 
         private void Initialize()
         {
-            var levelLenght = Random.Range(levelMinLenght, levelMaxLenght);
-            var numberOfPlatforms = Mathf.CeilToInt(levelLenght / distanceBetweenPlatforms);
-            levelLenght = numberOfPlatforms * distanceBetweenPlatforms;
+            var numberOfPlatforms = Mathf.CeilToInt(LevelLength / distanceBetweenPlatforms);
+            LevelLength = (int)(numberOfPlatforms * distanceBetweenPlatforms);
 
-            centerPillar.localScale = new Vector3(1, levelLenght + 6, 1);
-            finishLine.position = new Vector3(0, -levelLenght - 5, 0);
+            centerPillar.localScale = new Vector3(1, LevelLength + 6, 1);
+            finishLine.position = new Vector3(0, -LevelLength - 5, 0);
 
             for (var i = 0; i < numberOfPlatforms; i++)
             {
