@@ -6,17 +6,15 @@ namespace kadyrkaragishiev.Scripts
 {
     public class Platform : MonoBehaviour
     {
+        public delegate void OnDisableCallback(Platform platform);
+
         [SerializeField]
         private List<MeshRenderer> tileMeshRenderer = new List<MeshRenderer>();
 
         [SerializeField]
         private List<Rigidbody> tileRigidbody = new List<Rigidbody>();
 
-        private readonly Dictionary<GameObject, bool> _tileDictionary = new Dictionary<GameObject, bool>();
-
-        public delegate void OnDisableCallback(Platform platform);
-
-        public OnDisableCallback OnDisableEvent;
+        private Dictionary<GameObject, bool> _tileDictionary = new Dictionary<GameObject, bool>();
 
         public void Initialize(List<int> damageTileIndecies, Material normalMat, Material damageMat)
         {
@@ -48,14 +46,12 @@ namespace kadyrkaragishiev.Scripts
             }
 
             StartCoroutine(CallDisable());
-            // OnDisableEvent?.Invoke(this);
-            // Destroy(gameObject, 1f);
         }
 
         private IEnumerator CallDisable()
         {
             yield return new WaitForSeconds(1f);
-            OnDisableEvent?.Invoke(this);
+            Destroy(gameObject);
         }
     }
 }

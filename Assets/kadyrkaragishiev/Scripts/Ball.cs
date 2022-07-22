@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using kadyrkaragishiev.LevelingSystem;
 using UnityEngine;
 
 namespace kadyrkaragishiev.Scripts
@@ -21,7 +22,7 @@ namespace kadyrkaragishiev.Scripts
         [SerializeField]
         private GameObject bumpingEffect;
 
-        private bool controllable = true;
+        private bool _controllable = true;
         private Vector3 _moveDirection = Vector3.zero;
         private Vector3 _lastPosition;
         private float _myRadius;
@@ -31,21 +32,34 @@ namespace kadyrkaragishiev.Scripts
 
 
         public Dictionary<int, Platform> _platforms = new Dictionary<int, Platform>();
-        private int _currentPlaftorm = -1;
+        private int _currentPlatform = 0;
 
         private void Start()
         {
             _myRadius = transform.localScale.x / 2;
             _lastPosition = transform.position;
+            LevelManager.Instance.OnGameInit += InstanceOnOnGameInit;
         }
+
+        private void InstanceOnOnGameInit(LevelSettings settings)
+        {
+            _won = false;
+            _destroyed = false;
+            _controllable = true;
+            _isDashing = false;
+            _currentPlatform = 0;
+            _moveDirection = Vector3.zero;
+            _lastPosition = transform.position;
+        }
+
 
         private void Update()
         {
-            if(_won) return;
+            if (_won) return;
             if (_destroyed) return;
             _moveDirection.y -= gravityPower * Time.deltaTime;
             transform.position += _moveDirection * Time.deltaTime;
-            if (controllable)
+            if (_controllable)
             {
                 if (Input.GetMouseButtonDown(0))
                     _isDashing = true;
@@ -66,10 +80,10 @@ namespace kadyrkaragishiev.Scripts
             {
                 if (hit.transform.CompareTag("Finish Line"))
                 {
-                    Debug.Log("Finish");
                     ReachFinishLine();
                     return;
                 }
+
                 if (hit.transform.parent.TryGetComponent(out Platform platform))
                     Instantiate(bumpingEffect, hit.point, Quaternion.identity);
                 _moveDirection.y = bouncePower;
@@ -82,8 +96,10 @@ namespace kadyrkaragishiev.Scripts
             _moveDirection.y -= dashSpeed;
             if (!Physics.Linecast(_lastPosition, transform.position - new Vector3(0, _myRadius, 0),
                     out var hit)) return;
-            if (_currentPlaftorm < _platforms.Count)
+            if (_currentPlatform < _platforms.Count)
             {
+                _platforms[_currentPlatform].DestroyPlatform();
+
                 if (hit.transform.parent.TryGetComponent(out Platform platform))
                 {
                     if (platform.IsDamageTile(hit.transform.gameObject))
@@ -94,37 +110,37 @@ namespace kadyrkaragishiev.Scripts
                     }
                 }
 
-                _currentPlaftorm += 1;
-                try
-                {
-                    _platforms[_currentPlaftorm].DestroyPlatform();
-                }
-                catch (Exception e)
-                {
-                    platform.DestroyPlatform();
-                    Console.WriteLine(e);
-                    throw;
-                }
+                _currentPlatform += 1;
             }
             else
             {
-                ReachFinishLine();
-                _moveDirection = Vector3.zero;
-                transform.position = hit.point;
+                if (hit.transform.gameObject.CompareTag("Finish Line"))
+                {
+                    ReachFinishLine();
+                    _moveDirection = Vector3.zero;
+                    transform.position = hit.point;
+                }
             }
         }
 
         private void ReachFinishLine()
         {
+            Debug.Log("FINISH LINE");
             _won = true;
             _isDashing = false;
-            controllable = false;
+            _controllable = false;
+            OnBoardingBehaviour.Instance.CallOnBoarding("NextLevel");
+            gameObject.SetActive(false);
+            ProgressBehaviour.Instance.Progress++;
         }
 
         private void DestroyMe()
         {
+            OnBoardingBehaviour.Instance.CallOnBoarding("RestartPage");
             _destroyed = true;
-            Instantiate(Explode, transform.position, transform.rotation);
+            _platforms.Clear();
+            var t = Instantiate(Explode, transform.position, transform.rotation);
+            Destroy(t, 2f);
             gameObject.SetActive(false);
         }
     }

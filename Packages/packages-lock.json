@@ -1,5 +1,21 @@
 {
   "dependencies": {
+    "com.soprachevak.canvas-scaler-ps": {
+      "version": "https://github.com/SoprachevAK/CanvasScalerPS.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "hash": "3322b787f80723de160aa815817807c91673892b"
+    },
+    "com.soprachevak.safe-area": {
+      "version": "https://github.com/SoprachevAK/safe-area.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d5d9019d512386be8308aab8b82a258a66471a6a"
+    },
     "com.unity.burst": {
       "version": "1.6.5",
       "depth": 1,

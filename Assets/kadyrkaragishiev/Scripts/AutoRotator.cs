@@ -6,10 +6,6 @@ namespace kadyrkaragishiev.Scripts
     {
         [SerializeField]
         private Vector3 _rotateDir;
-
-        private void Update()
-        {
-            transform.Rotate(_rotateDir * Time.deltaTime);
-        }
+        private void Update() => transform.Rotate(_rotateDir * (Time.deltaTime * LevelManager.Instance.platformSpeed));
     }
 }
