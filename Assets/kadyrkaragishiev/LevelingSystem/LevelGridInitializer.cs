@@ -27,11 +27,9 @@ namespace kadyrkaragishiev.LevelingSystem
 
         private void InstanceOnOnProgressChanged(int progress)
         {
-            Debug.Log(ProgressBehaviour.Instance.Progress);
             for (var i = 0; i < _buttons.Count; i++)
             {
                 LevelManager.Instance.settingsList[i].isUnlocked = i <= progress;
-                Debug.Log(LevelManager.Instance.settingsList[i].isUnlocked);
                 _buttons[i].interactable = LevelManager.Instance.settingsList[i].isUnlocked;
             }
         }

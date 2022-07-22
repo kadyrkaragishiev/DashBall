@@ -27,9 +27,6 @@ namespace kadyrkaragishiev.Scripts
                 Instance = this;
         }
 
-        private void Start()
-        {
-            Progress = PlayerPrefs.GetInt("LevelProgress", 0);
-        }
+        private void Start() => Progress = PlayerPrefs.GetInt("LevelProgress", 0);
     }
 }
