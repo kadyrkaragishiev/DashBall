@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using kadyrkaragishiev.Scripts;
 using TMPro;
@@ -13,10 +12,13 @@ namespace kadyrkaragishiev.LevelingSystem
         private GameObject _buttonPrefab;
 
         [SerializeField]
+        private AudioSource _audioSource;
+
+        [SerializeField]
         private Transform CanvasContent;
 
         private LevelSettings _lastSettings;
-        private List<Button> _buttons = new List<Button>();
+        private List<Button> _buttons = new();
 
         private void Start()
         {
@@ -47,9 +49,10 @@ namespace kadyrkaragishiev.LevelingSystem
                 {
                     LevelManager.Instance.InitLevel(LevelManager.Instance.settingsList[i1]);
                     OnBoardingBehaviour.Instance.CallOnBoarding("");
+                    _audioSource.Play();
                 });
                 btn.GetComponent<Button>().interactable = LevelManager.Instance.settingsList[i].isUnlocked;
-                btn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = i.ToString();
+                btn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = (i+1).ToString();
             }
         }
     }

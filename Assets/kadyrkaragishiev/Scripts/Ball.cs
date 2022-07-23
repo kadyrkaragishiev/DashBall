@@ -22,6 +22,9 @@ namespace kadyrkaragishiev.Scripts
         [SerializeField]
         private GameObject bumpingEffect;
 
+        [SerializeField]
+        private BrickAudioController _brickAudioController;
+
         private bool _controllable = true;
         private Vector3 _moveDirection = Vector3.zero;
         private Vector3 _lastPosition;
@@ -31,7 +34,7 @@ namespace kadyrkaragishiev.Scripts
         private bool _destroyed;
 
 
-        public Dictionary<int, Platform> _platforms = new Dictionary<int, Platform>();
+        public Dictionary<int, Platform> _platforms = new();
         private int _currentPlatform = 0;
 
         private void Start()
@@ -98,8 +101,8 @@ namespace kadyrkaragishiev.Scripts
                     out var hit)) return;
             if (_currentPlatform < _platforms.Count)
             {
+                _brickAudioController.PlayRandomClip();
                 _platforms[_currentPlatform].DestroyPlatform();
-
                 if (hit.transform.parent.TryGetComponent(out Platform platform))
                 {
                     if (platform.IsDamageTile(hit.transform.gameObject))

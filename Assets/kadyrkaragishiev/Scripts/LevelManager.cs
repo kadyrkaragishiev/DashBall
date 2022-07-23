@@ -53,7 +53,7 @@ namespace kadyrkaragishiev.Scripts
         private Ball _ball;
 
         private LevelSettings _lastSettings;
-        private List<Platform> _platformList = new List<Platform>();
+        private List<Platform> _platformList = new();
         
         
         public List<LevelSettings> settingsList;
