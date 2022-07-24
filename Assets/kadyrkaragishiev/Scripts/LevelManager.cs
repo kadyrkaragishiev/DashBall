@@ -54,8 +54,8 @@ namespace kadyrkaragishiev.Scripts
 
         private LevelSettings _lastSettings;
         private List<Platform> _platformList = new();
-        
-        
+
+
         public List<LevelSettings> settingsList;
 
         private void Awake()
@@ -74,7 +74,9 @@ namespace kadyrkaragishiev.Scripts
             platformSpeed = settings.PlatformsSpeed;
 
             #endregion
+
             #region CleaningLevel
+
             if (_platformList.Count > 0)
                 foreach (var platform in _platformList)
                     if (platform != null)
@@ -84,6 +86,7 @@ namespace kadyrkaragishiev.Scripts
             _ball._platforms.Clear();
 
             #endregion
+
             _ball.transform.position = new Vector3(_ball.transform.position.x, 1, -1.15f);
             Initialize();
             OnGameInit?.Invoke(settings);
@@ -98,7 +101,7 @@ namespace kadyrkaragishiev.Scripts
 
         public void MoveToTheNextLevel()
         {
-            for(int i = 0; i< settingsList.Count; i++)
+            for (int i = 0; i < settingsList.Count; i++)
             {
                 if (settingsList[i] == _lastSettings)
                 {
@@ -132,7 +135,7 @@ namespace kadyrkaragishiev.Scripts
                 var damageTileCount = Random.Range(0, 5);
                 for (var j = 0; j < damageTileCount; j++)
                 {
-                    if (Random.Range(0, 0.95f) > _wrongPlatformChnace)
+                    if (Random.Range(0, 0.95f) < _wrongPlatformChnace)
                     {
                         var randomIndex = Random.Range(0, allTileIndecies.Count);
                         damageTileIndecies.Add(allTileIndecies[randomIndex]);

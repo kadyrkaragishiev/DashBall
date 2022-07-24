@@ -16,6 +16,7 @@ namespace kadyrkaragishiev.Scripts
                 _progress = value;
                 PlayerPrefs.SetInt("LevelProgress", _progress);
                 OnProgressChanged?.Invoke(_progress);
+                Debug.Log("Progress Changed");
             }
         }
 
