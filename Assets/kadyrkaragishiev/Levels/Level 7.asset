@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Level 7
   m_EditorClassIdentifier: 
   DistanceBetweenPlatforms: 0.95
-  LevelLength: 20
-  WrongPlatformsChance: 0.2
-  PlatformsSpeed: 15
+  LevelLength: 30
+  WrongPlatformsChance: 0.4
+  PlatformsSpeed: 25
+  isUnlocked: 0

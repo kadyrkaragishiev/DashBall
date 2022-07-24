@@ -102,10 +102,12 @@ namespace kadyrkaragishiev.Scripts
             {
                 if (settingsList[i] == _lastSettings)
                 {
+                    Debug.Log(settingsList[i].name + "   " + _lastSettings.name);
                     if (i + 1 < settingsList.Count)
                     {
                         InitLevel(settingsList[i + 1]);
                         OnBoardingBehaviour.Instance.CallOnBoarding("");
+                        return;
                     }
                 }
             }
