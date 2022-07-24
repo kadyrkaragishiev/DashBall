@@ -25,6 +25,9 @@ namespace kadyrkaragishiev.Scripts
         [SerializeField]
         private BrickAudioController _brickAudioController;
 
+        [SerializeField]
+        private AudioSource bumpingSource;
+
         private bool _controllable = true;
         private Vector3 _moveDirection = Vector3.zero;
         private Vector3 _lastPosition;
@@ -88,7 +91,10 @@ namespace kadyrkaragishiev.Scripts
                 }
 
                 if (hit.transform.parent.TryGetComponent(out Platform platform))
+                {
                     Instantiate(bumpingEffect, hit.point, Quaternion.identity);
+                    bumpingSource.Play();
+                }
                 _moveDirection.y = bouncePower;
                 transform.position = new Vector3(transform.position.x, hit.point.y + _myRadius, transform.position.z);
             }
