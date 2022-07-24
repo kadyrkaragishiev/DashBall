@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DistanceBetweenPlatforms: 0.95
   LevelLength: 20
-  WrongPlatformsChance: 0.2
+  WrongPlatformsChance: 0.4
   PlatformsSpeed: 15
+  isUnlocked: 1
