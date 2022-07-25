@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using kadyrkaragishiev.LevelingSystem;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
 using Random = UnityEngine.Random;
@@ -12,6 +13,8 @@ namespace kadyrkaragishiev.Scripts
     {
         public static LevelManager Instance;
         public event Action<LevelSettings> OnGameInit;
+
+        public List<LevelSettings> settingsList;
 
         #region MaterialsForLevels
 
@@ -52,19 +55,28 @@ namespace kadyrkaragishiev.Scripts
         [SerializeField]
         private Ball _ball;
 
+        [SerializeField]
+        private TextMeshProUGUI levelText;
+
         private LevelSettings _lastSettings;
         private List<Platform> _platformList = new();
-
-
-        public List<LevelSettings> settingsList;
 
         private void Awake()
         {
             if (Instance == null) Instance = this;
         }
 
+        private void Start()
+        {
+            if(ProgressBehaviour.Instance.Progress>=settingsList.Count)
+                ProgressBehaviour.Instance.Progress = settingsList.Count - 1;
+            InitLevel(settingsList[ProgressBehaviour.Instance.Progress]);
+        }
+
         public void InitLevel(LevelSettings settings)
         {
+            if(settings == null)
+                return;   
             #region SettingLevel
 
             _lastSettings = settings;
@@ -74,7 +86,6 @@ namespace kadyrkaragishiev.Scripts
             platformSpeed = settings.PlatformsSpeed;
 
             #endregion
-
             #region CleaningLevel
 
             if (_platformList.Count > 0)
@@ -90,6 +101,7 @@ namespace kadyrkaragishiev.Scripts
             _ball.transform.position = new Vector3(_ball.transform.position.x, 1, -1.15f);
             Initialize();
             OnGameInit?.Invoke(settings);
+            levelText.text = (ProgressBehaviour.Instance.Progress+1).ToString();
         }
 
 

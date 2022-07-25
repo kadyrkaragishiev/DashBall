@@ -69,9 +69,7 @@ namespace kadyrkaragishiev.Scripts
             if (_isDashing)
             {
                 Dash();
-                rb.AddTorque(
-                    new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f),
-                        Random.Range(-1f, 1f)) * 20f, ForceMode.Impulse);
+                rb.AddTorque(transform.forward* 20f, ForceMode.Impulse);
             }
         }
 
@@ -80,22 +78,34 @@ namespace kadyrkaragishiev.Scripts
             rb.velocity = Vector3.up * bouncePower;
             if (_isDashing)
             {
-                if (other.transform.parent.TryGetComponent(out Platform platform))
+                try
                 {
-                    if (platform.IsDamageTile(other.transform.gameObject))
+                    if (other.transform.parent.TryGetComponent(out Platform platform))
                     {
-                        DestroyMe();
+                        if (platform.IsDamageTile(other.transform.gameObject))
+                        {
+                            DestroyMe();
+                        }
+                        else
+                        {
+                            _brickAudioController.PlayRandomClip();
+                            platform.DestroyPlatform();
+                        }
                     }
                     else
                     {
-                        _brickAudioController.PlayRandomClip();
-                        platform.DestroyPlatform();
+                        ReachFinishLine();
+                        transform.position = other.gameObject.transform.position;
                     }
+
                 }
-                else
+                catch
                 {
-                    ReachFinishLine();
-                    transform.position = other.gameObject.transform.position;
+                    if(other.transform.gameObject.CompareTag("Finish Line"))
+                    {
+                        ReachFinishLine();
+                        transform.position = other.gameObject.transform.position;
+                    }
                 }
             }
             else

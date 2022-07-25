@@ -25,8 +25,7 @@ namespace kadyrkaragishiev.Scripts
         private void Awake()
         {
             if (Instance == null) Instance = this;
+            Progress = PlayerPrefs.GetInt("LevelProgress", 0);
         }
-
-        private void Start() => Progress = PlayerPrefs.GetInt("LevelProgress", 0);
     }
 }
