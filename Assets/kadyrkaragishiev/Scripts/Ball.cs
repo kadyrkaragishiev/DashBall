@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using kadyrkaragishiev.LevelingSystem;
 using UnityEngine;
@@ -14,9 +13,6 @@ namespace kadyrkaragishiev.Scripts
         private float bouncePower = 1f;
 
         [SerializeField]
-        private float dashSpeed = 10f;
-
-        [SerializeField]
         private GameObject Explode;
 
         [SerializeField]
@@ -28,10 +24,10 @@ namespace kadyrkaragishiev.Scripts
         [SerializeField]
         private AudioSource bumpingSource;
 
+        [SerializeField]
+        private Rigidbody rb;
+
         private bool _controllable = true;
-        private Vector3 _moveDirection = Vector3.zero;
-        private Vector3 _lastPosition;
-        private float _myRadius;
         private bool _isDashing;
         private bool _won;
         private bool _destroyed;
@@ -42,8 +38,6 @@ namespace kadyrkaragishiev.Scripts
 
         private void Start()
         {
-            _myRadius = transform.localScale.x / 2;
-            _lastPosition = transform.position;
             LevelManager.Instance.OnGameInit += InstanceOnOnGameInit;
         }
 
@@ -54,8 +48,6 @@ namespace kadyrkaragishiev.Scripts
             _controllable = true;
             _isDashing = false;
             _currentPlatform = 0;
-            _moveDirection = Vector3.zero;
-            _lastPosition = transform.position;
         }
 
 
@@ -63,78 +55,65 @@ namespace kadyrkaragishiev.Scripts
         {
             if (_won) return;
             if (_destroyed) return;
-            _moveDirection.y -= gravityPower * Time.deltaTime;
-            transform.position += _moveDirection * Time.deltaTime;
             if (_controllable)
             {
                 if (Input.GetMouseButtonDown(0))
                     _isDashing = true;
                 if (Input.GetMouseButtonUp(0))
+                {
                     _isDashing = false;
+                    rb.angularVelocity = Vector3.zero;
+                }
             }
 
             if (_isDashing)
+            {
                 Dash();
-            else
-                Idle();
-            _lastPosition = transform.position;
+                rb.AddTorque(
+                    new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f),
+                        Random.Range(-1f, 1f)) * 20f, ForceMode.Impulse);
+            }
         }
 
-        private void Idle()
+        private void OnCollisionEnter(Collision other)
         {
-            if (Physics.Linecast(_lastPosition, transform.position - new Vector3(0, _myRadius, 0), out var hit))
+            rb.velocity = Vector3.up * bouncePower;
+            if (_isDashing)
             {
-                if (hit.transform.CompareTag("Finish Line"))
+                if (other.transform.parent.TryGetComponent(out Platform platform))
+                {
+                    if (platform.IsDamageTile(other.transform.gameObject))
+                    {
+                        DestroyMe();
+                    }
+                    else
+                    {
+                        _brickAudioController.PlayRandomClip();
+                        platform.DestroyPlatform();
+                    }
+                }
+                else
                 {
                     ReachFinishLine();
-                    return;
+                    transform.position = other.gameObject.transform.position;
                 }
-
-                if (hit.transform.parent.TryGetComponent(out Platform platform))
-                {
-                    Instantiate(bumpingEffect, hit.point, Quaternion.identity);
-                    bumpingSource.Play();
-                }
-                _moveDirection.y = bouncePower;
-                transform.position = new Vector3(transform.position.x, hit.point.y + _myRadius, transform.position.z);
+            }
+            else
+            {
+                Instantiate(bumpingEffect, transform.position - new Vector3(0, transform.localScale.y / 2, 0),
+                    Quaternion.identity);
+                bumpingSource.Play();
+                if (other.gameObject.CompareTag("Finish Line")) ReachFinishLine();
             }
         }
 
         private void Dash()
         {
-            _moveDirection.y -= dashSpeed;
-            if (!Physics.Linecast(_lastPosition, transform.position - new Vector3(0, _myRadius, 0),
-                    out var hit)) return;
-            if (_currentPlatform < _platforms.Count)
-            {
-                _brickAudioController.PlayRandomClip();
-                _platforms[_currentPlatform].DestroyPlatform();
-                if (hit.transform.parent.TryGetComponent(out Platform platform))
-                {
-                    if (platform.IsDamageTile(hit.transform.gameObject))
-                    {
-                        transform.position = hit.point + new Vector3(0, _myRadius, 0);
-                        DestroyMe();
-                        return;
-                    }
-                }
-
-                _currentPlatform += 1;
-            }
-            else
-            {
-                if (hit.transform.gameObject.CompareTag("Finish Line"))
-                {
-                    ReachFinishLine();
-                    _moveDirection = Vector3.zero;
-                    transform.position = hit.point;
-                }
-            }
+            rb.velocity = Vector3.down * gravityPower;
         }
 
         private void ReachFinishLine()
         {
-            Debug.Log("FINISH LINE");
             _won = true;
             _isDashing = false;
             _controllable = false;

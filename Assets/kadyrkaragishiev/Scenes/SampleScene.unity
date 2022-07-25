@@ -632,6 +632,8 @@ GameObject:
   - component: {fileID: 471912653}
   - component: {fileID: 471912652}
   - component: {fileID: 471912655}
+  - component: {fileID: 471912656}
+  - component: {fileID: 471912657}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -779,14 +781,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad1133b91591b491097009621010fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityPower: 7
+  gravityPower: 20
   bouncePower: 3
-  dashSpeed: 1
   Explode: {fileID: 578576741995101275, guid: ba82c144c7ab74950ae0c267fa08d5fb, type: 3}
   bumpingEffect: {fileID: 1801920725884094469, guid: d481edbed369443888e82e56ac504306,
     type: 3}
   _brickAudioController: {fileID: 471912653}
   bumpingSource: {fileID: 471912655}
+  rb: {fileID: 471912657}
 --- !u!82 &471912655
 AudioSource:
   m_ObjectHideFlags: 0
@@ -883,6 +885,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &471912656
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471912650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &471912657
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471912650}
+  serializedVersion: 2
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 10
+  m_CollisionDetection: 2
 --- !u!1 &505674141
 GameObject:
   m_ObjectHideFlags: 0

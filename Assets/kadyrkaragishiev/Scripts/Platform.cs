@@ -14,6 +14,9 @@ namespace kadyrkaragishiev.Scripts
         [SerializeField]
         private List<Rigidbody> tileRigidbody = new List<Rigidbody>();
 
+        [SerializeField]
+        private List<Collider> _colliders;
+
         private Dictionary<GameObject, bool> _tileDictionary = new Dictionary<GameObject, bool>();
 
         public void Initialize(List<int> damageTileIndecies, Material normalMat, Material damageMat)
@@ -39,10 +42,12 @@ namespace kadyrkaragishiev.Scripts
 
         public void DestroyPlatform()
         {
-            foreach (var body in tileRigidbody)
+            for (var i = 0; i < tileRigidbody.Count; i++)
             {
+                var body = tileRigidbody[i];
                 body.isKinematic = false;
-                body.AddExplosionForce(1000, transform.position - new Vector3(0, 1, 0), 2);
+                body.AddForce((_colliders[i].gameObject.transform.forward)  * 10 + Vector3.up *5, ForceMode.Impulse);
+                _colliders[i].enabled = false;
             }
 
             StartCoroutine(CallDisable());
@@ -50,7 +55,7 @@ namespace kadyrkaragishiev.Scripts
 
         private IEnumerator CallDisable()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
             Destroy(gameObject);
         }
     }
