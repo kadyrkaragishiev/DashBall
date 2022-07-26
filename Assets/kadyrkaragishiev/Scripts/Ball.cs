@@ -95,8 +95,15 @@ namespace kadyrkaragishiev.Scripts
                     }
                     else
                     {
-                        ReachFinishLine();
-                        transform.position = other.gameObject.transform.position;
+                        if (other.gameObject.CompareTag("Finish Line"))
+                        {
+                            ReachFinishLine();
+                            transform.position = other.gameObject.transform.position;                            
+                        }
+                        else
+                        {
+                            DestroyMe();
+                        }
                     }
 
                 }
@@ -125,6 +132,7 @@ namespace kadyrkaragishiev.Scripts
 
         private void ReachFinishLine()
         {
+            Debug.Log("Reach finish");
             _won = true;
             _isDashing = false;
             _controllable = false;
