@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using kadyrkaragishiev.LevelingSystem;
+using kadyrkaragishiev.UI;
 using UnityEngine;
 
 namespace kadyrkaragishiev.Scripts

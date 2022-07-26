@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace kadyrkaragishiev.Scripts
+namespace kadyrkaragishiev.UI
 {
     public class OnBoardingBehaviour : MonoBehaviour
     {

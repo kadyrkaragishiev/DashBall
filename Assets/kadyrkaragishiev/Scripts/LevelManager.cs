@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using kadyrkaragishiev.LevelingSystem;
+using kadyrkaragishiev.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -98,7 +99,7 @@ namespace kadyrkaragishiev.Scripts
 
             #endregion
 
-            _ball.transform.position = new Vector3(_ball.transform.position.x, 1, -1.15f);
+            _ball.transform.position = new Vector3(0, 1, -1.15f);
             Initialize();
             OnGameInit?.Invoke(settings);
             levelText.text = (ProgressBehaviour.Instance.Progress+1).ToString();
