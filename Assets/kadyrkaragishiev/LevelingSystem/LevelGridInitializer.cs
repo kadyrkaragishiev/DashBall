@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using kadyrkaragishiev.Scripts;
+using kadyrkaragishiev.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
