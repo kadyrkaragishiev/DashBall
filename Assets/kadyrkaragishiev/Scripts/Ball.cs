@@ -137,6 +137,7 @@ namespace kadyrkaragishiev.Scripts
 
         private void ReachFinishLine()
         {
+            _scoreBarMenu.SetScore(LevelManager.Instance._lastSettings.LevelLength,LevelManager.Instance._lastSettings.LevelLength);
             _won = true;
             _isDashing = false;
             _controllable = false;

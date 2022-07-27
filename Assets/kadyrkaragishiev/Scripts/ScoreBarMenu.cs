@@ -1,3 +1,4 @@
+using DG.Tweening;
 using kadyrkaragishiev.LevelingSystem;
 using TMPro;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace kadyrkaragishiev.Scripts
         }
         public void SetScore(float score, int levelLenght)
         {
-            _scoreBar.value = score/levelLenght;
+            DOTween.To(()=> _scoreBar.value, x=>_scoreBar.value = x, score / levelLenght, 0.2f);
             _scoreText.text = "Score "+ score;
         }
     }
