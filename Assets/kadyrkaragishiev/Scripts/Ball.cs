@@ -27,6 +27,9 @@ namespace kadyrkaragishiev.Scripts
 
         [SerializeField]
         private Rigidbody rb;
+        
+        [SerializeField]
+        private ScoreBarMenu _scoreBarMenu;
 
         private bool _controllable = true;
         private bool _isDashing;
@@ -49,6 +52,7 @@ namespace kadyrkaragishiev.Scripts
             _controllable = true;
             _isDashing = false;
             _currentPlatform = 0;
+            _scoreBarMenu.SetScore(0, LevelManager.Instance._lastSettings.LevelLength);
         }
 
 
@@ -73,7 +77,6 @@ namespace kadyrkaragishiev.Scripts
                 rb.AddTorque(transform.forward* 20f, ForceMode.Impulse);
             }
         }
-
         private void OnCollisionEnter(Collision other)
         {
             rb.velocity = Vector3.up * bouncePower;
@@ -89,8 +92,10 @@ namespace kadyrkaragishiev.Scripts
                         }
                         else
                         {
+                            _currentPlatform++;
                             _brickAudioController.PlayRandomClip();
                             platform.DestroyPlatform();
+                            _scoreBarMenu.SetScore(_currentPlatform, LevelManager.Instance._lastSettings.LevelLength);
                         }
                     }
                     else
@@ -132,7 +137,6 @@ namespace kadyrkaragishiev.Scripts
 
         private void ReachFinishLine()
         {
-            Debug.Log("Reach finish");
             _won = true;
             _isDashing = false;
             _controllable = false;
