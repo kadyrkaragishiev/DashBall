@@ -17,17 +17,24 @@ namespace kadyrkaragishiev.Scripts
         [SerializeField]
         private TextMeshProUGUI _currentLevelText;
 
-        private void Start()
+        private int _lastLevelLenght;
+
+        private void Awake()
         {
-            LevelManager.Instance.OnGameInit += delegate(LevelSettings settings)
+            LevelManager.Instance.OnGameInit += settings =>
             {
                 _currentLevelText.text = settings.name;
+                _lastLevelLenght = Mathf.CeilToInt(settings.LevelLength / settings.DistanceBetweenPlatforms);
             };
         }
+
         public void SetScore(float score, int levelLenght)
         {
-            DOTween.To(()=> _scoreBar.value, x=>_scoreBar.value = x, score / levelLenght, 0.2f);
-            _scoreText.text = "Score "+ score;
+            Debug.Log(score + "  " + levelLenght);
+            DOTween.To(() => _scoreBar.value, x => _scoreBar.value = x,
+                score / _lastLevelLenght,
+                0.2f);
+            _scoreText.text = "Score " + score;
         }
     }
 }
