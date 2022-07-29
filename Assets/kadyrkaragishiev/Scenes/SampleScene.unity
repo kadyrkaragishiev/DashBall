@@ -1147,6 +1147,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2b05aade1d4fd4178b65b01dd57f2730, type: 2}
   - {fileID: 11400000, guid: 2f3df27fc8b3b48f2afb450143848cef, type: 2}
   - {fileID: 11400000, guid: 5a45227806f7441029a37c5b260d2643, type: 2}
+  - {fileID: 11400000, guid: a71bf826fde8543089b2b4f69d307d68, type: 2}
+  - {fileID: 11400000, guid: bd3db772d82b347048ed3f69334b113c, type: 2}
+  - {fileID: 11400000, guid: 8aca64ec0bd4249c7bcfcc545af2dfd1, type: 2}
+  - {fileID: 11400000, guid: e71c9ef50259140d59f172a8cbfa232a, type: 2}
+  - {fileID: 11400000, guid: ea137d7499f444e02b80c02a4ef66188, type: 2}
+  - {fileID: 11400000, guid: af53d850142934d23b03707ada1347cf, type: 2}
+  - {fileID: 11400000, guid: 2605b7148f5964f218d87e6afbe02b00, type: 2}
+  - {fileID: 11400000, guid: 91a50ed97f73f4bea9413db95141ce99, type: 2}
+  - {fileID: 11400000, guid: 1ecc4d6f86e134faebae2af6e8854b11, type: 2}
+  - {fileID: 11400000, guid: 5099912baa5c94d8186d6828d7834344, type: 2}
+  - {fileID: 11400000, guid: 2752a60eb8c8a4663a8f2ec07427dff7, type: 2}
+  - {fileID: 11400000, guid: bc3e3b92f0213470f8e638197fb627f9, type: 2}
+  - {fileID: 11400000, guid: 08f711ca53bce4ebfba47eebdd634eb8, type: 2}
+  - {fileID: 11400000, guid: 91b01289f71584fefaa0ff81455c3e9f, type: 2}
+  - {fileID: 11400000, guid: dc7e7b733c79249bbb3b8f431aca1f01, type: 2}
+  - {fileID: 11400000, guid: edd049b649ddc460597db51f07c609b1, type: 2}
+  - {fileID: 11400000, guid: 7800437fafab9458e848f269b0c0aac0, type: 2}
+  - {fileID: 11400000, guid: bb336545fa9a04d86b973fb18171e7c3, type: 2}
+  - {fileID: 11400000, guid: e14ac4ef4cec74074b9fa0f55c43b78c, type: 2}
+  - {fileID: 11400000, guid: 45d205b3d463645f6aff01e77248f1a8, type: 2}
   platform: {fileID: 7172131471065034685, guid: fe4ecf92239b24d0c98032468cb1a912,
     type: 3}
   centerPillar: {fileID: 3237216}
@@ -3724,7 +3744,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4224,7 +4244,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 50, y: 0, z: 100}
+    m_Scale: {x: 20, y: 0, z: 100}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -4422,7 +4442,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 1000
       minScalar: 10
       maxCurve:
         serializedVersion: 2
