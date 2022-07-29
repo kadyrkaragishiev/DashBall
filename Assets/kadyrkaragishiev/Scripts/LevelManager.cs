@@ -65,6 +65,7 @@ namespace kadyrkaragishiev.Scripts
         private void Awake()
         {
             if (Instance == null) Instance = this;
+            Application.targetFrameRate = 60;
         }
 
         private void Start()
@@ -79,7 +80,6 @@ namespace kadyrkaragishiev.Scripts
             if(settings == null)
                 return;   
             #region SettingLevel
-
             _lastSettings = settings;
             distanceBetweenPlatforms = settings.DistanceBetweenPlatforms;
             LevelLength = settings.LevelLength;
@@ -98,6 +98,7 @@ namespace kadyrkaragishiev.Scripts
             _ball._platforms.Clear();
 
             #endregion
+            Debug.Log("set settings");
 
             _ball.transform.position = new Vector3(0, 1, -1.15f);
             Initialize();
@@ -154,11 +155,11 @@ namespace kadyrkaragishiev.Scripts
                         allTileIndecies.RemoveAt(randomIndex);
                     }
                 }
-
                 instance.Initialize(damageTileIndecies, normalMaterial, damageMaterial);
                 _platformList.Add(instance);
                 _ball._platforms.Add(i, instance);
             }
+            Debug.Log(numberOfPlatforms);
         }
     }
 }

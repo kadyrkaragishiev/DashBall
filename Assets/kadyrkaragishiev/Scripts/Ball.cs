@@ -95,6 +95,7 @@ namespace kadyrkaragishiev.Scripts
                             _currentPlatform++;
                             _brickAudioController.PlayRandomClip();
                             platform.DestroyPlatform();
+                            Haptic.Vibrate(1);
                             _scoreBarMenu.SetScore(_currentPlatform, LevelManager.Instance._lastSettings.LevelLength);
                         }
                     }

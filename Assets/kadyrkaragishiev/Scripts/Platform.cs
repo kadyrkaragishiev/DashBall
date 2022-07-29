@@ -42,7 +42,6 @@ namespace kadyrkaragishiev.Scripts
 
         public void DestroyPlatform()
         {
-            Haptic.Vibrate(20);
             transform.parent = null;
             for (var i = 0; i < tileRigidbody.Count; i++)
             {
