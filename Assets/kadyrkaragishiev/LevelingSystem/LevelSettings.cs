@@ -16,7 +16,7 @@ namespace kadyrkaragishiev.LevelingSystem
         {
             DistanceBetweenPlatforms = Mathf.Round(Random.Range(0.9f, 1.5f)*100)/100;
             LevelLength = Random.Range(40, 60);
-            WrongPlatformsChance = Mathf.Round(Random.Range(0.4f, 0.7f));
+            WrongPlatformsChance = Mathf.Round(Random.Range(0.4f, 0.7f)*100)/100;
             PlatformsSpeed = Mathf.Round(Random.Range(30f, 40f));
         }
     }
