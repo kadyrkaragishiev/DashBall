@@ -59,7 +59,7 @@ namespace kadyrkaragishiev.Scripts
         [SerializeField]
         private TextMeshProUGUI levelText;
 
-        private LevelSettings _lastSettings;
+        public LevelSettings _lastSettings;
         private List<Platform> _platformList = new();
 
         private void Awake()
@@ -102,7 +102,6 @@ namespace kadyrkaragishiev.Scripts
             _ball.transform.position = new Vector3(0, 1, -1.15f);
             Initialize();
             OnGameInit?.Invoke(settings);
-            levelText.text = (ProgressBehaviour.Instance.Progress+1).ToString();
         }
 
 

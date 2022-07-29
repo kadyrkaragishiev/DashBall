@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e801625d535fd4535b6a2f8f71b186f8, type: 3}
   m_Name: Level 27
   m_EditorClassIdentifier: 
-  DistanceBetweenPlatforms: 0.97
-  LevelLength: 45
-  WrongPlatformsChance: 1
-  PlatformsSpeed: 33
+  DistanceBetweenPlatforms: 1.44
+  LevelLength: 47
+  WrongPlatformsChance: 0.48
+  PlatformsSpeed: 32
   isUnlocked: 0
