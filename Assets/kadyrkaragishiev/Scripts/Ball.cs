@@ -109,7 +109,8 @@ namespace kadyrkaragishiev.Scripts
                         }
                         else
                         {
-                            DestroyMe();
+                            if(other.gameObject.CompareTag("Damage Tile"))
+                                DestroyMe();
                         }
                     }
 
