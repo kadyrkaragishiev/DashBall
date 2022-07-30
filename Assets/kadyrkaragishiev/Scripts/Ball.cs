@@ -43,6 +43,7 @@ namespace kadyrkaragishiev.Scripts
         private void Start()
         {
             LevelManager.Instance.OnGameInit += InstanceOnOnGameInit;
+            Vibration.Vibration.Init();
         }
 
         private void InstanceOnOnGameInit(LevelSettings settings)
@@ -95,7 +96,7 @@ namespace kadyrkaragishiev.Scripts
                             _currentPlatform++;
                             _brickAudioController.PlayRandomClip();
                             platform.DestroyPlatform();
-                            Haptic.Vibrate(1);
+                            Vibration.Vibration.Vibrate(1);
                             _scoreBarMenu.SetScore(_currentPlatform, LevelManager.Instance._lastSettings.LevelLength);
                         }
                     }
