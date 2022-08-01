@@ -19,14 +19,12 @@ namespace kadyrkaragishiev.Scripts
 
         private int _lastLevelLenght;
 
-        private void Awake()
-        {
+        private void Awake() =>
             LevelManager.Instance.OnGameInit += settings =>
             {
                 _currentLevelText.text = settings.name;
                 _lastLevelLenght = Mathf.CeilToInt(settings.LevelLength / settings.DistanceBetweenPlatforms);
             };
-        }
 
         public void SetScore(float score, int levelLenght)
         {

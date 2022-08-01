@@ -16,6 +16,7 @@ namespace kadyrkaragishiev.Scripts
         public event Action<LevelSettings> OnGameInit;
 
         public List<LevelSettings> settingsList;
+        public LevelSettings _lastSettings;
 
         #region MaterialsForLevels
 
@@ -57,9 +58,8 @@ namespace kadyrkaragishiev.Scripts
         private Ball _ball;
 
         [SerializeField]
-        private TextMeshProUGUI levelText;
+        private TextMeshProUGUI commonScoreText;
 
-        public LevelSettings _lastSettings;
         private List<Platform> _platformList = new();
 
         private void Awake()
@@ -70,16 +70,26 @@ namespace kadyrkaragishiev.Scripts
 
         private void Start()
         {
-            if(ProgressBehaviour.Instance.Progress>=settingsList.Count)
+            var t = 0;
+            for (var i = 0; i < ProgressBehaviour.Instance.Progress; i++)
+                t += Mathf.CeilToInt(settingsList[i].LevelLength / settingsList[i].DistanceBetweenPlatforms);
+            commonScoreText.text = $"{t}";
+        }
+
+        public void StartGame()
+        {
+            if (ProgressBehaviour.Instance.Progress >= settingsList.Count)
                 ProgressBehaviour.Instance.Progress = settingsList.Count - 1;
             InitLevel(settingsList[ProgressBehaviour.Instance.Progress]);
         }
 
         public void InitLevel(LevelSettings settings)
         {
-            if(settings == null)
-                return;   
+            if (settings == null)
+                return;
+
             #region SettingLevel
+
             _lastSettings = settings;
             distanceBetweenPlatforms = settings.DistanceBetweenPlatforms;
             LevelLength = settings.LevelLength;
@@ -87,10 +97,11 @@ namespace kadyrkaragishiev.Scripts
             platformSpeed = settings.PlatformsSpeed;
 
             #endregion
+
             #region CleaningLevel
 
             if (_platformList.Count > 0)
-                foreach (var platform in _platformList)
+                foreach (Platform platform in _platformList)
                     if (platform != null)
                         Destroy(platform.gameObject);
             _platformList.Clear();
@@ -98,6 +109,7 @@ namespace kadyrkaragishiev.Scripts
             _ball._platforms.Clear();
 
             #endregion
+
             Debug.Log("set settings");
 
             _ball.transform.position = new Vector3(0, 1, -1.15f);
@@ -114,7 +126,7 @@ namespace kadyrkaragishiev.Scripts
 
         public void MoveToTheNextLevel()
         {
-            for (int i = 0; i < settingsList.Count; i++)
+            for (var i = 0; i < settingsList.Count; i++)
             {
                 if (settingsList[i] == _lastSettings)
                 {
@@ -139,10 +151,22 @@ namespace kadyrkaragishiev.Scripts
 
             for (var i = 0; i < numberOfPlatforms; i++)
             {
-                var instance = Instantiate(platform, centerPillar, true);
+                Platform instance = Instantiate(platform, centerPillar, true);
                 instance.transform.position = new Vector3(0, -i * distanceBetweenPlatforms, 0);
                 instance.transform.rotation = Quaternion.identity;
-                var allTileIndecies = new List<int>(9) {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+                var allTileIndecies = new List<int>(9)
+                {
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                };
                 var damageTileIndecies = new List<int>();
 
                 var damageTileCount = Random.Range(0, 5);
@@ -155,10 +179,12 @@ namespace kadyrkaragishiev.Scripts
                         allTileIndecies.RemoveAt(randomIndex);
                     }
                 }
+
                 instance.Initialize(damageTileIndecies, normalMaterial, damageMaterial);
                 _platformList.Add(instance);
                 _ball._platforms.Add(i, instance);
             }
+
             Debug.Log(numberOfPlatforms);
         }
     }

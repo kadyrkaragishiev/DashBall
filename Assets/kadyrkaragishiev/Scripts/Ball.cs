@@ -31,7 +31,7 @@ namespace kadyrkaragishiev.Scripts
         [SerializeField]
         private ScoreBarMenu _scoreBarMenu;
 
-        private bool _controllable = true;
+        private bool _controllable = false;
         private bool _isDashing;
         private bool _won;
         private bool _destroyed;
@@ -56,6 +56,7 @@ namespace kadyrkaragishiev.Scripts
             _scoreBarMenu.SetScore(0, LevelManager.Instance._lastSettings.LevelLength);
         }
 
+        public void UpdateControllable(bool b) => _controllable = b;
 
         private void Update()
         {
