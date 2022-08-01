@@ -17,6 +17,9 @@ namespace kadyrkaragishiev.Scripts
         private GameObject Explode;
 
         [SerializeField]
+        private GameObject Rain;
+
+        [SerializeField]
         private GameObject bumpingEffect;
 
         [SerializeField]
@@ -48,6 +51,7 @@ namespace kadyrkaragishiev.Scripts
 
         private void InstanceOnOnGameInit(LevelSettings settings)
         {
+            Rain.SetActive(false);
             _won = false;
             _destroyed = false;
             _controllable = true;
@@ -134,10 +138,7 @@ namespace kadyrkaragishiev.Scripts
             }
         }
 
-        private void Dash()
-        {
-            rb.velocity = Vector3.down * gravityPower;
-        }
+        private void Dash() => rb.velocity = Vector3.down * gravityPower;
 
         private void ReachFinishLine()
         {
@@ -147,6 +148,7 @@ namespace kadyrkaragishiev.Scripts
             OnBoardingBehaviour.Instance.CallOnBoarding("NextLevel");
             gameObject.SetActive(false);
             ProgressBehaviour.Instance.Progress++;
+            Rain.SetActive(true);
         }
 
         private void DestroyMe()

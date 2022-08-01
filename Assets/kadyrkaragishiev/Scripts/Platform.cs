@@ -45,7 +45,7 @@ namespace kadyrkaragishiev.Scripts
             transform.parent = null;
             for (var i = 0; i < tileRigidbody.Count; i++)
             {
-                var body = tileRigidbody[i];
+                Rigidbody body = tileRigidbody[i];
                 body.isKinematic = false;
                 body.AddForce((_colliders[i].gameObject.transform.forward) * 10 + Vector3.up * 5, ForceMode.Impulse);
                 _colliders[i].enabled = false;
