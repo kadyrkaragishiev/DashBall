@@ -1,5 +1,8 @@
 ﻿using System.Runtime.InteropServices;
+
+#if UNITY_IOS
 using TapticPlugin;
+#endif
 using UnityEngine;
 
 namespace Vibration
