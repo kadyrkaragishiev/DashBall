@@ -24,11 +24,11 @@ namespace kadyrkaragishiev.Scripts
             {
                 _currentLevelText.text = settings.name;
                 _lastLevelLenght = Mathf.CeilToInt(settings.LevelLength / settings.DistanceBetweenPlatforms);
+                SetScore(0, 0);
             };
 
         public void SetScore(float score, int levelLenght)
         {
-            Debug.Log(score + "  " + levelLenght);
             DOTween.To(() => _scoreBar.value, x => _scoreBar.value = x,
                 score / _lastLevelLenght,
                 0.2f);
