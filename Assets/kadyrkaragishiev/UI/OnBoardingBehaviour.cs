@@ -16,7 +16,7 @@ namespace kadyrkaragishiev.UI
 
         public void CallOnBoarding(string onBoardingName)
         {
-            foreach (var t in onBoardings) t.SetActive(t.name == onBoardingName);
+            foreach (GameObject t in onBoardings) t.SetActive(t.name == onBoardingName);
         }
     }
 }
