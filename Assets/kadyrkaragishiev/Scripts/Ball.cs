@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using kadyrkaragishiev.LevelingSystem;
 using kadyrkaragishiev.UI;
@@ -83,6 +84,7 @@ namespace kadyrkaragishiev.Scripts
                 rb.AddTorque(transform.forward* 20f, ForceMode.Impulse);
             }
         }
+        
         private void OnCollisionEnter(Collision other)
         {
             rb.velocity = Vector3.up * bouncePower;
